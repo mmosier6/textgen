@@ -225,11 +225,11 @@ function getWSDE(){
 	}else if(level === '3-1'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '150 to 190 mph';
-			wsde[0] = 140;
+			wsde[0] = 150;
 			wsde[1] = 190;								
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '135 to 180 mph';
-			wsde[0] = 130;
+			wsde[0] = 135;
 			wsde[1] = 180;					
 		}else{
 			text['WSDE'] = '120 to 165 mph';
@@ -638,7 +638,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 		}else if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = 'a strong to potentially violent';
 			text['TOR_STRENGTH_TEXT'] = text['INTENSITY_DESCRIPTOR'];
-			text['WSDE'] = '130 to 180 mph';
+			text['WSDE'] = '135 to 180 mph';
 			text['EF_RANGE'] = 'EF2-EF4';
 			text['TRACK_LENGTH'] = 'long-track ';
 			text['TRACK_CONFIDENCE'] = 'expected to continue';	
@@ -783,6 +783,9 @@ function getIBW(level){
 	damage[2] = "Significant damage possible; Homes substantially damaged";
 	damage[3] = "Widespread destruction possible; Significant damage likely";
 	damage[4] = "Disaster potential; Widespread destruction likely";
+	damage[5] = "Disaster potential; Widespread destruction";
+	damage[6] = "Disaster";
+	damage[7] = "Widespread destruction possible";
 	IBWInfo['potential_damage'] = damage;
 	//Storm mode options
 	var stormMode = new Array();
@@ -838,15 +841,29 @@ function getIBW(level){
 	}
  
 	info['2-6'] = [0,1,1,1,1,1];
-	info['3-1'] = [1,2,3,3,2,2];
-	if(vrotcon === '6+'){
-		info['3-1'] = [2,2,3,3,2,2];
+	info['3-1'] = [1,2,3,3,2,2];	
+	if(vrotcon === '3-5'){
+		info['3-1'][1] = 3;
+	}else	if(vrotcon === '6+'){
+		info['3-1'] = [2,4,3,3,2,2];
 	} 
 	info['3-2'] = [1,2,2,3,2,2];
 	info['3-3'] = info['3-2'];
 	info['3-4'] = [1,2,2,2,1,2];
-	info['4-1'] = [2, 4, 4, 4, 2, 3];
+	info['4-1'] = [2, 3, 4, 4, 2, 3];
+	if(vrotcon === '1-2'){
+		info['4-1'][0] = 1; 
+	}
+	if(vrotcon === '6+'){
+		info['4-1'][1] = 7;
+	}
+
 	info['5-1'] = [2, 4, 4, 4, 2, 4];
+	if(vrotcon === '3-5'){
+		info['5-1'][1] = 5;
+	}else if(vrotcon === '6+'){
+		info['5-1'][1] = 6;
+	}
 	
 	var IBW = new Object();
 	
