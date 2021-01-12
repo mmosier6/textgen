@@ -1,0 +1,2 @@
+date_utc,latitude,longitude,lat_diff,lon_diff,mode,RM,mrglRM,QLCS,hybrid,tilt,time,arl_peak,out,in,vrot,delta-v,circulation,radar,warning,dptds,stp,pop,lbound,ubound,range,mlcape,srh01
+02/21/2020,26.552185,-79.4538725,0.020394,0.020935,0,0,0,0,0,0.483,1821,7900,8.74,4.86,6.8,1.67,0,AMX,0,0,0,0,60,110,88.0461778,133,0
