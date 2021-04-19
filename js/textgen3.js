@@ -3,7 +3,7 @@ function generateText(){
 	jQuery("#textarea-4").text("");
 	//clearCanvas("3");
 	//clearCanvas("4");
-	
+
 	var desk		= jQuery("input[name=desks]:checked").val();
 	var vrot 		= jQuery("input[name=vrots]:checked").val();
 	var vrotcon = jQuery("input[name=vrot-conts]:checked").val();
@@ -19,7 +19,7 @@ function generateText(){
 	st = st + 'stp = ' + stp + '\n';
 	st = st + 'popden = ' + popden + '\n';
 	st = st + 'tds = ' + tds + '\n';
-	
+
 	var level = getLevel2(vrot, stp, popden, tds);
 
 	if(level == '1-2' || level == '1-1'){
@@ -31,10 +31,10 @@ function generateText(){
 	var s = v[0];
 	var e = v[2];
 	createEFBox(s,e);
-	//var wsde = getWSDE(level, vrotcon);				
-	//var efRange = getEFRange(level, vrotcon);	
+	//var wsde = getWSDE(level, vrotcon);
+	//var efRange = getEFRange(level, vrotcon);
 	//st = st + 'wsde = ' + wsde + "\n";
-	
+
 	//var vrotText = convert2Text('vrot', vrot);
 	//var stpText = convert2Text('stp', stp);
 	//var risk = '';
@@ -61,18 +61,18 @@ function generateText(){
 		radarTime = '[RADAR_UTC_TIME]';
 		srh = "[SRH]";
 		mlcape = "[MLCAPE]";
-	
+
 	}).always(function(){
-	
+
 		var modeDescriptor = text['MODE_DESCRIPTOR'];
 		if(modeDescriptor == ''){
-			modeDescriptor = '[MODE_DESCRIPTOR]';	
+			modeDescriptor = '[MODE_DESCRIPTOR]';
 		}
-		var convectiveMode = text['CONVECTIVE_MODE']; 
+		var convectiveMode = text['CONVECTIVE_MODE'];
 		if(convectiveMode == ''){
 			convectiveMode = '[CONVECTIVE_MODE]';
 		}
-	
+
 		var geographicLocation = '[GEOGRAPHIC LOCATION]';
 		/*
 		//Create Summary Text
@@ -81,74 +81,74 @@ function generateText(){
 		summaryTxt = summaryTxt + ' with potential peak winds of ' + text['WSDE']  + ' (' + text['EF_RANGE'] + ') is ' + text['CONFIDENCE_A'] + '.';
 		summaryTxt = summaryTxt + text['RARE_EVENT'];
 		summaryTxt = summaryTxt + '\n\n';
-	
+
 		//Create Discussion Text
 		//Version 1
 		var txtv1 = 'DISCUSSION\n';
 		txtv1 = txtv1 + 'Recent radar signatures from ' + radarSite + ' as of ' + radarTime + ' reveal ' + modeDescriptor + ' ' + convectiveMode;
-		txtv1 = txtv1 + ' characterized by a ' + radarTilt + ' degree rotational velocity ' + text['VROT'] + '.'; 			
-	
+		txtv1 = txtv1 + ' characterized by a ' + radarTilt + ' degree rotational velocity ' + text['VROT'] + '.';
+
 		//Version 2
 		var txtv2 = 'DISCUSSION\n';
 		txtv2 = txtv2 + modeDescriptor.charAt(0).toUpperCase() + modeDescriptor.slice(1)  + ' ' + convectiveMode;
 		txtv2 = txtv2 + " will continue to move through a favorable environment over " + geographicLocation;
 		txtv2 = txtv2 + ", characterized by 0-1 km SRH around " + srh + " m2/s2";
-		txtv2 = txtv2 + " and MLCAPE near " + mlcape + " J/kg per latest mesoanalysis data. ";  
+		txtv2 = txtv2 + " and MLCAPE near " + mlcape + " J/kg per latest mesoanalysis data. ";
 		txtv2 = txtv2 + 'Recent radar signatures from ' + radarSite + ' as of ' + radarTime + ' reveal ' + modeDescriptor + ' ' + convectiveMode;
-		txtv2 = txtv2 + ' characterized by a ' + radarTilt + ' degree rotational velocity ' + text['VROT'] + '.'; 			
+		txtv2 = txtv2 + ' characterized by a ' + radarTilt + ' degree rotational velocity ' + text['VROT'] + '.';
 
 		//End Text
 		var txt3 = '';
 		if(tds === 'yes'){
-			txt3 = txt3 + ' A tornadic debris signature has also been noted on recent radar scans.';	
+			txt3 = txt3 + ' A tornadic debris signature has also been noted on recent radar scans.';
 		}
 		txt3 = txt3 + ' These signatures are occurring in an environment characterized by STP ' + text['STP'] + '.';
 		txt3 = txt3 + ' Previous signatures within similar environments produced tornado-damage-estimated wind speeds from ' + text['WSDE'];
-		
+
 		if(text['CONFIDENCE_IS_HIGH'] !== ''){
 			txt3 = txt3 + ' and' + text['CONFIDENCE_IS_HIGH'] + ' for ' + text['TOR_STRENGTH_TEXT'] + ' tornado.'
 			txt3 = txt3 + ' A ' + text['TRACK_LENGTH'] + 'tornado' + text['RISK'] + ' is ';
 			txt3 = txt3 + text['TRACK_CONFIDENCE'] + ' based on the rotational velocity duration ';
-			txt3 = txt3 + 'and the storm moving within a favorable downstream environment.';  	
+			txt3 = txt3 + 'and the storm moving within a favorable downstream environment.';
 		}else{
 			txt3 = txt3 + ".";
 			txt3 = txt3 + ' A ' + text['TRACK_LENGTH'] + 'tornado' + text['RISK'] + ' ';
 			txt3 = txt3 + text['TRACK_CONFIDENCE'] + ' based on the rotational velocity duration ';
-			txt3 = txt3 + 'and the storm moving within a favorable downstream environment.';  
+			txt3 = txt3 + 'and the storm moving within a favorable downstream environment.';
 		}
-		txt3 = txt3 + '\n\n' + getExceedanceProbText(level); 
+		txt3 = txt3 + '\n\n' + getExceedanceProbText(level);
 		txt3 = txt3 + '\n\n' + level;
-	
+
 		//Follow-up text
 		var summaryTxt2 = 'SUMMARY\n';
 		summaryTxt2 = summaryTxt2 + 'Based on recent radar data, the ' + convectiveMode + ' discussed in [MCD_NUM] has continued to intensify and ';
 		summaryTxt2 = summaryTxt2 +  text['INTENSITY_DESCRIPTOR'] + ' tornado';
-		summaryTxt2 = summaryTxt2 + ' with potential peak winds of ' + text['WSDE']  + ' (' + text['EF_RANGE'] + ') is now ' + text['CONFIDENCE_A'] + '.';	
+		summaryTxt2 = summaryTxt2 + ' with potential peak winds of ' + text['WSDE']  + ' (' + text['EF_RANGE'] + ') is now ' + text['CONFIDENCE_A'] + '.';
 		summaryTxt2 = summaryTxt2 + '\n\n';
 
 		//var txtv4 = 'DISCUSSION\n';
 		//txtv4 = txtv4 + 'Recent radar signatures from ' + radarSite + ' as of ' + radarTime + ' reveal ' + modeDescriptor + ' ' + convectiveMode;
 		//txtv4 = txtv4 + ' characterized by a ' + radarTilt + ' degree rotational velocity ' + text['VROT'] + '.';
-		
+
 		var text1 = jQuery('#text-version-1').prop("checked");
 		var text2 = jQuery('#text-version-2').prop("checked");
-					
+
 		if(follow == 'yes'){
 			if(text1 === true){
 				jQuery("#textarea-1").val(summaryTxt2 + txtv1 + txt3);
 				checkTextArea("1", summaryTxt2 + txtv1 + txt3);
-			}else if(text2 === true){	
+			}else if(text2 === true){
 				jQuery("#textarea-1").val(summaryTxt2 + txtv2 + txt3);
 				checkTextArea("2", summaryTxt2 + txtv2 + txt3);
-			}	
+			}
 		}else{
 			if(text1 === true){
 				jQuery("#textarea-1").val(summaryTxt + txtv1 + txt3);
 				checkTextArea("1", summaryTxt + txtv1 + txt3)
-			}else if(text2 == true){	
+			}else if(text2 == true){
 				jQuery("#textarea-1").val(summaryTxt + txtv2 + txt3);
 				checkTextArea("2", summaryTxt + txtv2 + txt3);
-			}	
+			}
 		}
 		*/
 		//txt3 = "Tornado-damage-estimated wind speeds are " + text['WSDE']
@@ -156,11 +156,11 @@ function generateText(){
 		summaryTxt = summaryTxt + 'Based on recent radar and environmental data, ' + text['INTENSITY_DESCRIPTOR'] + ' tornado';
 		summaryTxt = summaryTxt + ' with potential peak winds of ' + text['WSDE']  + ' (' + text['EF_RANGE'] + ') is ' + text['CONFIDENCE_A'] + '.';
 		summaryTxt = summaryTxt + text['RARE_EVENT'];
-		summaryTxt = summaryTxt + '\n\n'; 
+		summaryTxt = summaryTxt + '\n\n';
 		jQuery("#textarea-3").text(summaryTxt);
 		txt3 = getExceedanceProbText(level);
 		jQuery("#textarea-4").text(txt3);
-	//});		
+	//});
 }
 
 function getWSDE(){
@@ -170,26 +170,26 @@ function getWSDE(){
 	var popden 	= jQuery("input[name=popdens]:checked").val();
 	var tds 		= jQuery("input[name=tdss]:checked").val();
 	var follow 	= jQuery("input[name=followup]:checked").val();
-	
+
 	var text = new Object;
-	
+
 	var st = '';
 	st = st + 'vrot = ' + vrot + '\n';
 	st = st + 'stp = ' + stp + '\n';
 	st = st + 'popden = ' + popden + '\n';
 	st = st + 'tds = ' + tds + '\n';
-	
+
 	var ul = new Array();
 	var lr = new Array();
-	
+
 	var level = getLevel(vrot, stp, popden, tds);
 	console.log("level (v1): " + level);
-	
+
 	var level= getLevel2(vrot, stp, popden);
 	console.log("level (v2): " + level);
-	
+
 	var wsde = new Array();
-	
+
 	if(level === '5-1'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '190 to 205 mph';
@@ -202,7 +202,7 @@ function getWSDE(){
 		}else{
 			text['WSDE'] = '145 to 190 mph';
 			wsde[0] = 145;
-			wsde[1] = 190;		
+			wsde[1] = 190;
 		}
 		ul = [350,30];
 		lr = [401, 62];
@@ -210,217 +210,217 @@ function getWSDE(){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '170 to 205 mph';
 			wsde[0] = 170;
-			wsde[1] = 205;		
-		}else if(vrotcon === '3-5'){ 
+			wsde[1] = 205;
+		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '140 to 190 mph';
 			wsde[0] = 140;
-			wsde[1] = 190;				
+			wsde[1] = 190;
 		}else{
 			text['WSDE'] = '120 to 170 mph';
 			wsde[0] = 120;
-			wsde[1] = 170;				
+			wsde[1] = 170;
 		}
 		ul = [350,30];
-		lr = [401, 62];		
+		lr = [401, 62];
 	}else if(level === '3-1'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '150 to 190 mph';
 			wsde[0] = 150;
-			wsde[1] = 190;								
+			wsde[1] = 190;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '135 to 180 mph';
 			wsde[0] = 135;
-			wsde[1] = 180;					
+			wsde[1] = 180;
 		}else{
 			text['WSDE'] = '120 to 165 mph';
 			wsde[0] = 120 ;
-			wsde[1] = 165;		
+			wsde[1] = 165;
 		}
 		ul = [91, 30];
-		lr = [350, 62];			
+		lr = [350, 62];
 	}else if(level === '3-2'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '125 to 170 mph';
 			wsde[0] = 125 ;
-			wsde[1] = 170;		
+			wsde[1] = 170;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '120 to 165 mph';
 			wsde[0] = 120;
-			wsde[1] = 165;			
+			wsde[1] = 165;
 		}else{
 			text['WSDE'] = '115 to 155 mph';
 			wsde[0] = 115;
-			wsde[1] = 155;		
+			wsde[1] = 155;
 		}
 		ul = [198,62];
-		lr = [401,88];			
+		lr = [401,88];
 	}else if(level === '3-3'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '120 to 160 mph';
 			wsde[0] = 120 ;
-			wsde[1] = 160;		
+			wsde[1] = 160;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '115 to 155 mph';
 			wsde[0] = 115;
-			wsde[1] = 155;			
+			wsde[1] = 155;
 		}else{
 			text['WSDE'] = '110 to 145 mph';
 			wsde[0] = 110;
-			wsde[1] = 145;		
+			wsde[1] = 145;
 		}
 		ul = [198,88];
-		lr = [401,118];			
+		lr = [401,118];
 	}else if(level === '3-4'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '125 to 160 mph';
 			wsde[0] = 125 ;
-			wsde[1] = 160;		
+			wsde[1] = 160;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '115 to 150 mph';
 			wsde[0] = 115;
-			wsde[1] = 150;			
+			wsde[1] = 150;
 		}else{
 			text['WSDE'] = '110 to 140 mph';
 			wsde[0] = 110;
-			wsde[1] = 140;		
+			wsde[1] = 140;
 		}
 		ul = [91,62];
-		lr = [198,88];			
+		lr = [198,88];
 	}else if(level === '2-1'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '120 to 150 mph';
 			wsde[0] = 120 ;
-			wsde[1] = 150;		
+			wsde[1] = 150;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '100 to 135 mph';
 			wsde[0] = 100;
-			wsde[1] = 135;			
+			wsde[1] = 135;
 		}else{
 			text['WSDE'] = '95 to 130 mph';
 			wsde[0] = 95;
-			wsde[1] = 130;		
+			wsde[1] = 130;
 		}
 		ul = [91,88];
-		lr = [198,118];			
+		lr = [198,118];
 	}else if(level === '2-2'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '115 to 150 mph';
 			wsde[0] = 115 ;
-			wsde[1] = 150;		
+			wsde[1] = 150;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '95 to 140 mph';
 			wsde[0] = 95;
-			wsde[1] = 140;			
+			wsde[1] = 140;
 		}else{
 			text['WSDE'] = '90 to 130 mph';
 			wsde[0] = 90;
-			wsde[1] = 130;		
+			wsde[1] = 130;
 		}
 		ul = [198,118];
-		lr = [401,149];			
+		lr = [401,149];
 	}else if(level === '2-3'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '115 to 145 mph';
 			wsde[0] = 115 ;
-			wsde[1] = 145;		
+			wsde[1] = 145;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '90 to 135 mph';
 			wsde[0] = 90;
-			wsde[1] = 135;			
+			wsde[1] = 135;
 		}else{
 			text['WSDE'] = '85 to 120 mph';
 			wsde[0] = 85;
-			wsde[1] = 120;		
+			wsde[1] = 120;
 		}
 		ul = [91,118];
-		lr = [198,149];			
+		lr = [198,149];
 	}else if(level === '2-4'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '110 to 140 mph';
 			wsde[0] = 110 ;
-			wsde[1] = 140;		
+			wsde[1] = 140;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '85 to 125 mph';
 			wsde[0] = 85;
-			wsde[1] = 125;			
+			wsde[1] = 125;
 		}else{
 			text['WSDE'] = '75 to 115 mph';
 			wsde[0] = 75;
-			wsde[1] = 115;		
+			wsde[1] = 115;
 		}
 		ul = [198,149];
-		lr = [401,193];			
+		lr = [401,193];
 	}else if(level === '2-5'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '110 to 140 mph';
 			wsde[0] = 110 ;
-			wsde[1] = 140;		
+			wsde[1] = 140;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '85 to 125 mph';
 			wsde[0] = 85;
-			wsde[1] = 125;			
+			wsde[1] = 125;
 		}else{
 			text['WSDE'] = '75 to 115 mph';
 			wsde[0] = 75;
-			wsde[1] = 115;		
+			wsde[1] = 115;
 		}
 		ul = [40,30];
-		lr = [91,149];			
+		lr = [91,149];
 	}else if(level === '2-6'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '110 to 125 mph';
 			wsde[0] = 110 ;
-			wsde[1] = 125;		
+			wsde[1] = 125;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '85 to 115 mph';
 			wsde[0] = 85;
-			wsde[1] = 115;			
+			wsde[1] = 115;
 		}else{
 			text['WSDE'] = '75 to 110 mph';
 			wsde[0] = 75;
-			wsde[1] = 110;		
+			wsde[1] = 110;
 		}
 		ul = [91,149];
-		lr = [198,193];			
+		lr = [198,193];
 	}else if(level === '1-1'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '90 to 120 mph';
 			wsde[0] = 90;
-			wsde[1] = 120;		
+			wsde[1] = 120;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '80 to 115 mph';
 			wsde[0] = 80;
-			wsde[1] = 115;		
+			wsde[1] = 115;
 		}else{
 			text['WSDE'] = '70 to 110 mph';
 			wsde[0] = 70;
-			wsde[1] = 110;		
+			wsde[1] = 110;
 		}
 		ul = [40,149];
-		lr = [91,265];			
+		lr = [91,265];
 	}else if(level === '1-2'){
 		if(vrotcon === '6+'){
 			text['WSDE'] = '90 to 120 mph';
 			wsde[0] = 90;
-			wsde[1] = 120;		
+			wsde[1] = 120;
 		}else if(vrotcon === '3-5'){
 			text['WSDE'] = '80 to 115 mph';
 			wsde[0] = 80;
-			wsde[1] = 115;		
+			wsde[1] = 115;
 		}else{
 			text['WSDE'] = '70 to 110 mph';
 			wsde[0] = 70;
-			wsde[1] = 110;		
+			wsde[1] = 110;
 		}
 		ul = [91,193];
-		lr = [401,265];			
+		lr = [401,265];
 	}
-	
+
 	jQuery("#textarea-3").text("");
 	clearCanvas("3");
 	jQuery("#textarea-4").text("");
 	clearCanvas("4");
-	
+
 	var lower = wsde[0];
 	var upper = wsde[1];
 	jQuery("#wsde-lower").empty();
@@ -433,8 +433,8 @@ function getWSDE(){
 	updateCanvas("3", ul, lr);
 	updateCanvas("4", ul, lr);
 	updateStormInfo(IBW, text['WSDE']);
-	createExceedanceBarChart('5', level); 
-}	
+	createExceedanceBarChart('5', level);
+}
 
 function getLevel(vrot, stp, popden){
 	//"Level" decision tree
@@ -442,7 +442,7 @@ function getLevel(vrot, stp, popden){
 		if(stp === 'gt6'){
 			if(popden === 'ge20'){
 				return '5-1';
-			}	
+			}
 			if(popden === 'lt20'){
 				return '4-1';
 			}
@@ -450,7 +450,7 @@ function getLevel(vrot, stp, popden){
 			return '2-2';
 		}else{
 			return '3-1';
-		}	
+		}
 	}else if(vrot === '61-70' || vrot === '51-60'){
 		if(stp === 'gt6' || stp === '5-6' || stp === '4-5' || stp === '3-4'){
 			return '3-2';
@@ -488,7 +488,7 @@ function getLevel2(vrot, stp, popden){
 		if(stp === 'gt6'){
 			if(popden === 'ge20'){
 				return '5-1';
-			}	
+			}
 			if(popden === 'lt20'){
 				return '4-1';
 			}
@@ -496,7 +496,7 @@ function getLevel2(vrot, stp, popden){
 			return '2-5';
 		}else{
 			return '3-1';
-		}	
+		}
 	}else if(vrot === '61-70'){
 		if(stp === 'gt6' || stp === '5-6' || stp === '4-5' || stp === '3-4'){
 			return '3-2';
@@ -509,7 +509,7 @@ function getLevel2(vrot, stp, popden){
 		if(stp === 'gt6' || stp === '5-6' || stp === '4-5' || stp === '3-4'){
 			return '3-3';
 		}else if (stp === 'lt1'){
-			return '2-5';	
+			return '2-5';
 		}else{
 			return '2-1';
 		}
@@ -544,19 +544,19 @@ function getLevel2(vrot, stp, popden){
 function getText(level, vrot, vrotcon, stp, popden, tds){
 	//Initialize object
 	var text = new Object();
-	
+
 	//Object keys
 	var keys = new Array(
 		"INTENSITY_DESCRIPTOR", "WSDE", "EF_RANGE", "CONFIDENCE_A", "RARE_EVENT", "MODE_DESCRIPTOR", "CONVECTIVE_MODE",
 		"VROT", "TDS", "STP", "CONFIDENCE_IS_HIGH", "TOR_STRENGTH_TEXT", "TRACK_LENGTH", "RISK", "TRACK_CONFIDENCE");
 	for(var i in keys){
 		text[keys[i]] = "";
-	}	
-		
+	}
+
 	text['VROT'] = convert2Text('vrot', vrot);
 	if(tds === 'yes'){
-		text['TDS'] = ' A tornadic debris signature has also been noted on recent radar scans.';	
-	}else{			
+		text['TDS'] = ' A tornadic debris signature has also been noted on recent radar scans.';
+	}else{
 		text['TDS'] = '';
 	}
 	text['CONFIDENCE_IS_HIGH'] = '';
@@ -574,10 +574,10 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['INTENSITY_DESCRIPTOR'] = "a violent";
 			text['TOR_STRENGTH_TEXT'] = 'a likely violent';
 			text['WSDE'] = '190 to 205 mph';
-			text['EF_RANGE'] = 'EF4-EF5';			
+			text['EF_RANGE'] = 'EF4-EF5';
 			text['TRACK_LENGTH'] = 'long-track ';
 			text['TRACK_CONFIDENCE'] = 'expected to continue';
-			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';						
+			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';
 		}else	if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = "a violent";
 			text['TOR_STRENGTH_TEXT'] = 'a likely violent';
@@ -585,14 +585,14 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['EF_RANGE'] = 'EF4-EF5';
 			text['TRACK_LENGTH'] = 'long-track ';
 			text['TRACK_CONFIDENCE'] = 'expected to continue';
-			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';		
+			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';
 		}else{
 			text['INTENSITY_DESCRIPTOR'] = "an intense to potentially violent";
 			text['TOR_STRENGTH_TEXT'] = 'an intense to potentially violent';
 			text['WSDE'] = '145 to 190 mph';
 			text['EF_RANGE'] = 'EF3-EF4';
 			text['TRACK_LENGTH'] = 'longer-track ';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
 		}
 	}else if(level === '4-1'){
 		text['CONFIDENCE_A'] = 'likely ongoing';
@@ -603,25 +603,25 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['INTENSITY_DESCRIPTOR'] = 'a violent';
 			text['TOR_STRENGTH_TEXT'] = 'a likely violent';
 			text['WSDE'] = '170 to 205 mph';
-			text['EF_RANGE'] = 'EF4-EF5';		
+			text['EF_RANGE'] = 'EF4-EF5';
 			text['TRACK_LENGTH'] = 'long-track ';
 			text['TRACK_CONFIDENCE'] = 'expected to continue';
-			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';				
-		}else if(vrotcon === '3-5'){ 
+			text['RARE_EVENT'] = ' THIS IS AN EXCEPTIONALLY RARE EVENT.';
+		}else if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = 'an intense to potentially violent';
 			text['TOR_STRENGTH_TEXT'] = text['INTENSITY_DESCRIPTOR'];
 			text['WSDE'] = '140 to 190 mph';
 			text['EF_RANGE'] = 'EF3-EF4';
 			text['TRACK_LENGTH'] = 'long-track ';
-			text['TRACK_CONFIDENCE'] = 'expected to continue';	
+			text['TRACK_CONFIDENCE'] = 'expected to continue';
 		}else{
 			text['INTENSITY_DESCRIPTOR'] = 'a strong to potentially violent';
 			text['TOR_STRENGTH_TEXT'] = text['INTENSITY_DESCRIPTOR'];
 			text['WSDE'] = '120 to 170 mph';
 			text['EF_RANGE'] = 'EF2-EF4';
 			text['TRACK_LENGTH'] = 'longer-track ';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
-		}			
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
+		}
 	}else if(level === '3-1'){
 		text['CONFIDENCE_A'] = 'likely ongoing';
 		text['CONFIDENCE_IS_HIGH'] = ' confidence is high';
@@ -633,23 +633,23 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['WSDE'] = '140 to 190 mph';
 			text['EF_RANGE'] = 'EF3-EF4';
 			text['TRACK_LENGTH'] = 'long-track ';
-			text['TRACK_CONFIDENCE'] = 'expected to continue';	
-			
+			text['TRACK_CONFIDENCE'] = 'expected to continue';
+
 		}else if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = 'a strong to potentially violent';
 			text['TOR_STRENGTH_TEXT'] = text['INTENSITY_DESCRIPTOR'];
 			text['WSDE'] = '135 to 180 mph';
 			text['EF_RANGE'] = 'EF2-EF4';
 			text['TRACK_LENGTH'] = 'long-track ';
-			text['TRACK_CONFIDENCE'] = 'expected to continue';	
+			text['TRACK_CONFIDENCE'] = 'expected to continue';
 		}else{
 			text['INTENSITY_DESCRIPTOR'] = 'a strong to intense';
 			text['TOR_STRENGTH_TEXT'] = text['INTENSITY_DESCRIPTOR'];
 			text['WSDE'] = '120 to 165 mph';
 			text['EF_RANGE'] = 'EF2-EF3';
 			text['TRACK_LENGTH'] = 'longer-track ';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
-		}			
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
+		}
 	}else if(level === '3-2'){
 		text['CONFIDENCE_A'] = 'likely ongoing';
 		text['CONFIDENCE_IS_HIGH'] = ' confidence is high';
@@ -661,7 +661,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['WSDE'] = '120 to 170 mph';
 			text['EF_RANGE'] = 'EF2-EF4';
 			text['TRACK_LENGTH'] = 'potential long-track ';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
 		}else if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = 'a strong to intense';
 			text['TOR_STRENGTH_TEXT'] = 'likely strong to intense';
@@ -675,8 +675,8 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['WSDE'] = '115 to 155 mph';
 			text['EF_RANGE'] = 'EF2-EF3';
 			text['TRACK_LENGTH'] = '';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
-		}			
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
+		}
 	}else if((level === '2-1') || (level === '2-2') || (level === '2-3')){
 		text['CONFIDENCE_A'] = 'likely ongoing';
 		text['CONFIDENCE_IS_HIGH'] = ' confidence is high';
@@ -688,8 +688,8 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['WSDE'] = '110 to 145 mph';
 			text['EF_RANGE'] = 'EF1-EF3';
 			text['TRACK_LENGTH'] = 'longer-track ';
-			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';	
-			
+			text['TRACK_CONFIDENCE'] = 'ongoing and may continue';
+
 		}else if(vrotcon === '3-5'){
 			text['INTENSITY_DESCRIPTOR'] = 'a potentially strong';
 			text['TOR_STRENGTH_TEXT'] = 'a possibly strong';
@@ -698,7 +698,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['CONFIDENCE_IS_HIGH'] = '';
 			text['TRACK_LENGTH'] = '';
 			text['RISK'] = ' risk';
-			text['TRACK_CONFIDENCE'] = 'continues with this storm';	
+			text['TRACK_CONFIDENCE'] = 'continues with this storm';
 		}else{
 			text['INTENSITY_DESCRIPTOR'] = 'a potentially strong';
 			text['TOR_STRENGTH_TEXT'] = 'a possibly strong';
@@ -707,7 +707,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['CONFIDENCE_IS_HIGH'] = '';
 			text['TRACK_LENGTH'] = '';
 			text['RISK'] = ' risk';
-			text['TRACK_CONFIDENCE'] = 'continues with this storm';	
+			text['TRACK_CONFIDENCE'] = 'continues with this storm';
 		}
 	}else if((level === '1-1') || (level === '1-2')){
 		text['CONFIDENCE_A'] = 'possible';
@@ -716,7 +716,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 		text['CONVECTIVE_MODE'] = '[supercell/QLCS]';
 		text['TRACK_LENGTH'] = '';
 		text['RISK'] = ' risk';
-		text['TRACK_CONFIDENCE'] = 'continues with this storm';	
+		text['TRACK_CONFIDENCE'] = 'continues with this storm';
 		if(vrotcon === '6+'){
 			text['INTENSITY_DESCRIPTOR'] = 'a';
 			text['TOR_STRENGTH_TEXT'] = 'a';
@@ -734,8 +734,8 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 			text['EF_RANGE'] = 'EF0-EF1';
 		}
 	}
-	
-	
+
+
 	var lower = jQuery("#wsde-lower").text();
 	var upper = jQuery("#wsde-upper").text();
 
@@ -747,20 +747,20 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 		upper = a[2];
 		jQuery("#wsde-upper").empty();
 		jQuery("#wsde-upper").text(upper);
-		colorCodeWSDE(a[0], a[2]);	 
+		colorCodeWSDE(a[0], a[2]);
 	}else if((upper === '') || (lower === '')){
-		
+
 	}else{
 		text['WSDE'] = lower + ' to ' + upper + ' mph';
 		efs = new Array();
 		efs[0] = windSpeed2EF(lower);
 		efs[1] = windSpeed2EF(upper);
 		text['EF_RANGE'] = efs[0] + '-' + efs[1];
-		colorCodeWSDE(lower,upper);	 	
+		colorCodeWSDE(lower,upper);
 	}
-	
+
 	return text;
-	
+
 }
 
 function getIBW(level){
@@ -769,7 +769,7 @@ function getIBW(level){
 	var vrotcon = jQuery("input[name=vrot-conts]:checked").val();
 	console.log(vrotcon);
 	var IBWInfo = new Object();
-	
+
 	//Tag options
 	var tag = new Array();
 	tag[0] = 'Base';
@@ -818,7 +818,7 @@ function getIBW(level){
 	frequency[3] = "Rare (several per year)";
 	frequency[4] = "Very rare (one every few years)";
 	IBWInfo['frequency'] = frequency;
-	
+
 	var IBWKeys = new Array('tag', 'potential_damage', 'storm_mode', 'outlook_probability', 'watch_type', 'frequency');
 	var levels = new Array('1-1', '1-2', '2-1', '2-2', '2-3', '2-4', '2-5', '2-6', '3-1', '3-2', '3-3', '3-4', '4-1', '5-1');
 	var info = new Object;
@@ -831,7 +831,7 @@ function getIBW(level){
 	if(vrotcon === '6+'){
 		info['2-1'][0] = 1;
 	}
-	info['2-2'] = info['2-1'];	
+	info['2-2'] = info['2-1'];
 	info['2-3'] = info['2-1'];
 	info['2-4'] = [0,1,1,1,1,1];
 	info['2-5'] = [0,1,2,1,0,1];
@@ -839,20 +839,20 @@ function getIBW(level){
 		info['2-4'][0] = 1;
 		info['2-5'][0] = 1;
 	}
- 
+
 	info['2-6'] = [0,1,1,1,1,1];
-	info['3-1'] = [1,2,3,3,2,2];	
+	info['3-1'] = [1,2,3,3,2,2];
 	if(vrotcon === '3-5'){
 		info['3-1'][1] = 3;
 	}else	if(vrotcon === '6+'){
 		info['3-1'] = [2,4,3,3,2,2];
-	} 
+	}
 	info['3-2'] = [1,2,2,3,2,2];
 	info['3-3'] = info['3-2'];
 	info['3-4'] = [1,2,2,2,1,2];
 	info['4-1'] = [2, 3, 4, 4, 2, 3];
 	if(vrotcon === '1-2'){
-		info['4-1'][0] = 1; 
+		info['4-1'][0] = 1;
 	}
 	if(vrotcon === '6+'){
 		info['4-1'][1] = 7;
@@ -864,16 +864,16 @@ function getIBW(level){
 	}else if(vrotcon === '6+'){
 		info['5-1'][1] = 6;
 	}
-	
+
 	var IBW = new Object();
-	
+
 	info[level].forEach(function(d,n){
 		var k = IBWKeys[n];
 		console.log(k + " => " + IBWInfo[k][d]);
 		IBW[k] = IBWInfo[k][d];
 	});
-	
-		
+
+
 	return IBW;
 }
 
@@ -881,7 +881,7 @@ function createEFBox(start,end){
 	var wspd = new Array(start, end);
 	var s;
 	var e;
-	
+
 	for(var i = 0; i < wspd.length; i++){
 		var v = wspd[i];
 		if(v >= 200){
@@ -905,7 +905,7 @@ function createEFBox(start,end){
 	jQuery("#ef-box").css("top", "-5px");
 	jQuery("#ef-box").css("left", s.toString()+"px");
 	jQuery("#ef-box").css("width", w.toString()+'px');
-	jQuery("#ef-box").show();	
+	jQuery("#ef-box").show();
 }
 
 function colorCodeWSDE(wspd1, wspd2){
@@ -914,7 +914,7 @@ function colorCodeWSDE(wspd1, wspd2){
 		var v = wspd[i];
 		var c;
 		if(v >= 170){
-			c = {'background': 'rgba(255, 0, 255, 1)','text': 'black'};	
+			c = {'background': 'rgba(255, 0, 255, 1)','text': 'black'};
 		}else if(v >= 135){
 			c = {'background': 'rgba(112,  48, 160, 1)','text': 'white'};
 		}else if(v >= 110){
@@ -937,12 +937,12 @@ function colorCodeWSDE(wspd1, wspd2){
 			jQuery("#wsde-upper").css('color', c['text']);
 			jQuery("#wsde-upper").css('font-weight', 'bold');
 		}
-	}		 
+	}
 }
 
 function windSpeed2EF(wspd){
 	var ef_breaks = new Array(0, 60, 86, 111, 136, 166, 201);
-	if(wspd >= ef_breaks[6]){	
+	if(wspd >= ef_breaks[6]){
 		return 'EF5';
 	}else if(wspd >= ef_breaks[5]){
 		return 'EF4';
@@ -982,7 +982,7 @@ function getExceedanceProbText(level){
 			t = t + 'EF4+ Tornado =\tLess than 1%' + '\n';
 		}
 	}else if(probs[4] === -9999){
-		//t = t + 'EF4+ Tornado =\t0%' + '\n'; 
+		//t = t + 'EF4+ Tornado =\t0%' + '\n';
 	}else{
 		t = t + 'EF4+ Tornado =\t' + probs[4] + '%' + '\n';
 	}
@@ -993,7 +993,7 @@ function getExceedanceProbText(level){
 	}else{
 		t = t + 'EF5 Tornado  =\t' + probs[5] + '%' + '\n';
 	}
-	
+
 	return t;
 }
 
@@ -1029,9 +1029,9 @@ function getExceedanceProbs(level){
 		return [100, 66, 12, 1, -9999, -9999];
 	}else{
 		return 'ERROR';
-	}	
+	}
 }
-		
+
 function convert2Text(which, value){
 	if(which === 'vrot'){
 		if(value === 'lt25'){
@@ -1049,32 +1049,32 @@ function convert2Text(which, value){
 			return 'of at least 70 kt';
 		}
 	}
-	
+
 	if(which === 'stp'){
 		if(value === 'lt1'){
 			return 'less than 1';
 		}else if(value === '1-2'){
-			return 'between 1 and 2';					
+			return 'between 1 and 2';
 		}else if(value === '2-3'){
 			return 'between 2 and 3';
 	  }else if(value === '3-4'){
 	 		return 'between 3 and 4';
-	  }else if(value === '4-5'){			 
+	  }else if(value === '4-5'){
 			return 'between 4 and 5';
 		}else if(value === '5-6'){
 			return 'between 5 and 6';
 		}else if(value === 'gt6'){
 			return 'greater than 6';
-		}	
-	}			
+		}
+	}
 }
 
 
 function readGR2Info(desk){
 	var def = jQuery.Deferred();
 	var info = new Object();
-	var keys = new Array("time", "radar", "tilt", "mode", "mlcape", "srh01");  
-	
+	var keys = new Array("time", "radar", "tilt", "mode", "mlcape", "srh01");
+
 	getGR2Info(desk).done(function(data){
 		keys.forEach(function(d,n){
 			if(d in data){
@@ -1086,7 +1086,7 @@ function readGR2Info(desk){
 					info[d] = Math.round(data[d] * 10) / 10;
 				}else{
 					info[d] = data[d];
-				}	
+				}
 			}
 			if(n ===(keys.length-1)){
 				def.resolve(info);
@@ -1095,7 +1095,7 @@ function readGR2Info(desk){
 	}).fail(function(data){
 		def.reject(data);
 	});
-	
+
 	return def.promise();
 }
 
@@ -1103,19 +1103,19 @@ function getGR2Info(desk){
 	var _def = jQuery.Deferred();
 	jQuery.ajax({
 		dataType: "json",
-		url: "/mosier/textgen/tools/getGR2Info.php?desk=" + desk	
+		url: "/mosier/textgen/tools/getGR2Info.php?desk=" + desk
 	}).done(function(data){
 		console.log(data);
 		if("ERROR" in data){
 			_def.reject(data);
 		}else{
 			_def.resolve(data);
-		}	
+		}
 	});
-	
+
 	return _def.promise();
-	
-}		
+
+}
 
 
 function checkTextArea(which, text){
@@ -1124,20 +1124,20 @@ function checkTextArea(which, text){
 			testKeys = new Array('[RADAR_ID]', '[RADAR_UTC_TIME]', '[RADAR_TILT]');
 		}else if(which === "2"){
 			testKeys = new Array('[GEOGRAPHIC LOCATION]', '[SRH]', '[MLCAPE]', '[RADAR_ID]', '[RADAR_UTC_TIME]', '[RADAR_TILT]')
-		}	
+		}
 		var txt;
 		if(text){
 			txt = text;
-		}else{	
+		}else{
 			txt = jQuery("#textarea-1").val();
-		}	
+		}
 		var errors = false;
 		testKeys.forEach(function(k, i){
 			if(txt.includes(k)){
 				if(errors === false){
-					errors = '<b><i>' + k + "</i></b>"; 
+					errors = '<b><i>' + k + "</i></b>";
 				}else{
-					errors = errors + "," + '<b><i>' + k + "</i></b>"; 
+					errors = errors + "," + '<b><i>' + k + "</i></b>";
 				}
 			}
 		});
@@ -1151,10 +1151,10 @@ function checkTextArea(which, text){
 			out = out + errors;
 			jQuery("#" + ec_id).css("background-color", "red");
 		}
-		
+
 		jQuery("#errorcheck1").empty();
-		jQuery("#errorcheck1").html(out);	
-		
+		jQuery("#errorcheck1").html(out);
+
 }
 
 function adjustWSDE(which, way){
@@ -1188,7 +1188,7 @@ function updateCanvas(num, ul, lr){
 	var sx = ul[0];
 	var sy = ul[1];
 	var box_width = lr[0] - ul[0];
-	var box_height= lr[1] - ul[1]; 
+	var box_height= lr[1] - ul[1];
 	var img = new Image();
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, c.width, c.height);
@@ -1212,7 +1212,7 @@ function updateCanvas(num, ul, lr){
 		//img.src = "./src/2D_1-5min_levels_decision_tree_wind_speeds.png";
 		if(num === "3"){img.src = "./src/2D_a1-5min_levels_decision_tree_wind_speeds.png";}
 		if(num === "4"){img.src = "./src/2D_IBW_a1-5min.png";}
-	}		
+	}
 }
 
 function clearCanvas(num){
@@ -1224,7 +1224,7 @@ function clearCanvas(num){
 
 function updateStormInfo(IBW, WSDE){
 	console.log('updateStormInfo');
-	
+
 	var red1 = "rgba(255, 153, 153, 1)";
 	var red2 = "rgba(255, 0, 0, 1)";
 	var red3 = "rgba(150, 0, 0, 1)";
@@ -1247,7 +1247,7 @@ function updateStormInfo(IBW, WSDE){
 	jQuery("#ibw-outlook-probability").find("td:eq(1)").html('<center>'+IBW['outlook_probability']+"</center>");
 	jQuery("#ibw-watch-type").find("td:eq(1)").html('<center>'+IBW['watch_type']+"</center>");
 	jQuery("#ibw-frequency").find("td:eq(1)").html('<center>'+IBW['frequency']+"</center>");
-	
+
 }
 
 function createExceedanceBarChart(num, level){
@@ -1258,7 +1258,7 @@ function createExceedanceBarChart(num, level){
 	var ctx = c.getContext("2d");
 	var probs = getExceedanceProbs(level);
 	console.log(probs);
-	
+
 	var plotData = {
 		"EF1+": probs[1],
 		"EF2+": probs[2],
@@ -1266,19 +1266,19 @@ function createExceedanceBarChart(num, level){
 		"EF4+": probs[4],
 		"EF5": probs[5],
 	}
-	
+
 	var myBarchart = new Barchart({
 		canvas: c,
 		padding: 20,
 		gridScale: 10,
-		gridColor: "#eeeee", 
+		gridColor: "#eeeee",
 		data: plotData,
 		dataLabels: true,
 		//colors: ["#a55ca5", "#67b6c7", "#bccd7a", "#eb9743", "#4c1036"]
 		colors: ["#d3d3d3", "#c0c0c0", "#a9a9a9", "#808080", "#000000"]
 		//colors: ["rgba(211, 211, 211, 0.6)", "rgba(192, 192, 192, 0.6)", "rgba(169, 169, 169, 0.6)", "rgba(128, 128, 128, 0.6)", "rgba(0, 0, 0, 0.6)"]
 	});
-	
+
 	myBarchart.draw();
-			
+
 }

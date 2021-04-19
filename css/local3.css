@@ -81,7 +81,7 @@
 }
 
 #ef-scale{
-	background-image: url("/mosier/textgen/css/ef-scale-legend_textgen.png");
+	background-image: url("./ef-scale-legend_textgen.png");
 	background-repeat: no-repeat;
 }
 
@@ -99,5 +99,8 @@
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	
+
+}
+
+#canvas-3{
 }
