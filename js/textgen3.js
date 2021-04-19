@@ -531,9 +531,9 @@ function getLevel2(vrot, stp, popden){
 		}
 	}else if(vrot === 'lt25'){
 		if(stp === 'lt1'){
-			return '1-2';
-		}else{
 			return '1-1';
+		}else{
+			return '1-2';
 		}	
 	}else{
 		return '???';

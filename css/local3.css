@@ -14,6 +14,7 @@
 	right: 0px;
 	width: 65%;
 	top: 0px;
+	overflow-y: scroll;
 }
 
 #menu{
