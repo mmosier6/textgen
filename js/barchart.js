@@ -85,6 +85,8 @@ var Barchart = function(options){
  							var yy = this.canvas.height - barHeight - this.options.padding
  							if(val > 0){
  								this.ctx.fillText(val + "%", xx, yy);
+ 							}else if(val === -9999){
+ 								this.ctx.fillText("0%", xx, yy);
  							}else{
  								this.ctx.fillText("<1%", xx, yy);
  							}
