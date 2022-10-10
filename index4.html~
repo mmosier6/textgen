@@ -220,7 +220,7 @@
 				</div>
 				<div class = 'col-6'>
 					<div style = 'font-size: 12pt; font-weight: bold;'><center>Conditional Probabilities</center></div>
-					<center><canvas id = "canvas-5" width = "500" height = "300" style = "border: 1px solid black;"></canvas></center>
+					<center><canvas id = "canvas-5" width = "400" height = "300" style = "border: 1px solid black;"></canvas></center>
 				</div>
 			</div>
 			<div class = 'row'>
@@ -229,6 +229,12 @@
 					<canvas id = "canvas-4" width = "500" height = "300"></canvas>
 				</div>
 				<div class = 'col-6'>
+					<div style = 'font-size: 12pt; font-weight: bold;'><center>Tornado Damage Intensity Histograms</center></div>
+					<center><canvas id = "canvas-6" width = "400" height = "300" style = "border: 1px solid black;"></canvas></center>
+				</div>
+			</div>
+			<div class = 'row'>
+				<div class = 'col-12'>
 					<div style = 'font-size: 12pt; font-weight: bold;'><center>Storm Info/IBW Recommendations</center></div>
 					<table id = "ibw-table" style = 'width:95%; float:left; margin: auto;'>
 						<tr>
