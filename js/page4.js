@@ -1,10 +1,10 @@
 function buildPage(page){
 	jQuery("#desk").buttonset();
-	jQuery("#vrot").buttonset();
-	jQuery("#vrot-cont").buttonset();
-	jQuery("#stp").buttonset();
-	jQuery("#popden").buttonset();
-	jQuery("#tds").buttonset();
+	//jQuery("#vrot").buttonset();
+	//jQuery("#vrot-cont").buttonset();
+	//jQuery("#stp").buttonset();
+	//jQuery("#popden").buttonset();
+	//jQuery("#tds").buttonset();
 	jQuery("#spotter").buttonset();
 
 	jQuery("#follow-up").buttonset();
