@@ -86,8 +86,15 @@
 }
 
 #ef-scale{
+	/*
 	background-image: url("./ef-scale-legend_textgen.png");
 	background-repeat: no-repeat;
+	*/
+}
+
+#ef-scale img{
+	max-width:100%;
+	height:auto;
 }
 
 #ef-box{
