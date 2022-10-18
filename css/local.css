@@ -6,13 +6,15 @@
 #left{
 	position: absolute;
 	left: 0px;
-	width: 45%;
+	width: 35%;
 }
 
 #right{
 	position: absolute;
 	right: 0px;
-	width: 55%;
+	width: 65%;
+	top: 0px;
+	overflow-y: scroll;
 }
 
 #menu{
@@ -51,6 +53,9 @@
 	/*width: 200px;*/
 }
 
+#ibw-table tr, #ibw-table td{
+	border: 1px solid black;
+}
 
 #errorcheck1, #errorcheck2{
 	background-color: #41BB00;
@@ -64,7 +69,7 @@
 
 #textarea-3, #textarea-4{
 	width: 95%;
-	height: 200px;
+	height: 100px;
 	margin-left: 1px;
 	margin-right:1px;
 }
@@ -76,7 +81,7 @@
 }
 
 #ef-scale{
-	background-image: url("/mosier/textgen/css/ef-scale-legend_textgen.png");
+	background-image: url("./ef-scale-legend_textgen.png");
 	background-repeat: no-repeat;
 }
 
@@ -94,5 +99,8 @@
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	
+
+}
+
+#canvas-3{
 }

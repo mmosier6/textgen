@@ -6,14 +6,19 @@ function buildPage(page){
 	jQuery("#popden").buttonset();
 	jQuery("#tds").buttonset();
 	jQuery("#spotter").buttonset();
-	
+
 	jQuery("#follow-up").buttonset();
 	jQuery("#autopop-btn").button().on('click', function(){console.log("auto pop");});
-	
-	jQuery("#generate-btn").button().on('click', function(){generateText();checkTextArea("textarea-2");});
-	
-	jQuery("#generate-wsde").button().on('click', function(){getWSDE();});
-	
+
+	jQuery("#generate-btn").button().on('click', function(){generateText();});
+
+	jQuery("#generate-wsde").button().on('click', function(){getWSDE();generateText();});
+
+	jQuery('input[type=radio][name=text-version]').on("change", function(){
+		console.log("radio button change");
+		generateText();
+	});
+
 	//Lower minus/plus clicks
 	jQuery("#wsde-lower-minus .ui-icon-circle-minus").on('click', function(){
 		adjustWSDE('lower', 'down');
@@ -29,16 +34,49 @@ function buildPage(page){
 		adjustWSDE('upper', 'up');
 	});
 
-	jQuery("#generate-text-btn").button().on('click', function(){generateText();checkTextArea("textarea-2");});
-	
+	jQuery("#generate-text-btn").button().on('click', function(){generateText();});
+
+
+	var c = document.getElementById("canvas-3");
+	var ctx = c.getContext("2d");
+	var img = new Image();
+	console.log('width:' + c.width)
+	console.log('height:' + c.height)
+	img.onload = function(){
+		ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, c.width, c.height);
+	};
+	img.src = "./src/2D_c15plusmin_levels_decision_tree_wind_speeds.png";
+
+	var c2 = document.getElementById("canvas-4");
+	var ctx2 = c2.getContext("2d");
+	var img2 = new Image();
+	console.log('width:' + c2.width)
+	console.log('height:' + c2.height)
+	img2.onload = function(){
+		ctx2.drawImage(img2, 0, 0, img2.width, img2.height, 0, 0, c2.width, c2.height);
+	};
+	img2.src = "./src/2D_IBW_c15plusmin.png";
+
+	//jQuery("#textarea-3").text("");
+	//jQuery("#textarea-4").text("");
+
+
+	/*
 	jQuery("#textarea-1").bind('input propertychange', function(){
-		checkTextArea("textarea-1");
+		var text1 = jQuery('#text-version-1').prop("checked");
+		var text2 = jQuery('#text-version-2').prop("checked");
+		if(text1 === true){
+			checkTextArea("1");
+		}else if(text2 === true){
+			checkTextArea("2");
+		}
+
 	});
-	
-	jQuery("#textarea-2").bind('input propertychange', function(){
-		checkTextArea("textarea-2");
-	});
-	
+	*/
+	//jQuery("#textarea-2").bind('input propertychange', function(){
+	//	checkTextArea("2");
+	//});
+
 	jQuery("#vrot-dialog").dialog({
 		autoOpen: false,
 		resizable: false,
@@ -50,7 +88,7 @@ function buildPage(page){
 				$(this).dialog("close");
 			}
 		}
-	});	
+	});
 	jQuery("#weaktor-dialog").dialog({
 		autoOpen: false,
 		resizable: false,
@@ -106,7 +144,7 @@ function getOpts(page){
 	page.options['range_before'] = false;
 	page.options['range_after']	 = false;
 	page.options['highlight_opt']= 'operational';
-	
+
 	//Get Url Options
 	var optString = location.search.substring(1);
 	urlOpts.forEach(function(d, i){
@@ -116,10 +154,9 @@ function getOpts(page){
 				page.options[d.slice(0,-1)] = a;
 			}else{
 				page.options[d] = a;
-			}	
+			}
 		}
 	});
 	page.debug = page.options['debug'];
 
 }
-
