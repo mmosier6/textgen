@@ -1,6 +1,6 @@
 Repo Created on 01/12/2021 by Matt Mosier
 
-Purpose: "textgen" web tool was initially created by Matt Mosier at the Storm Prediction Center to assist in the quick generation of "meso-gamma" Mesoscale Discussions. 
+Purpose: "textgen" web tool was initially created by Matt Mosier at the Storm Prediction Center to assist in the quick generation of text for Mesoscale Discussions. It has recently been updated to include more information including conditional probabilities as well as IBW recommendations.
 	
 Reference: Smith et al.	 
 
