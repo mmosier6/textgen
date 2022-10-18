@@ -1,8 +1,9 @@
 Repo Created on 01/12/2021 by Matt Mosier
 
-Updates: None
-
 Purpose: "textgen" web tool was initially created by Matt Mosier at the Storm Prediction Center to assist in the quick generation of "meso-gamma" Mesoscale Discussions. 
 The initial version created is under index.html. Subsquent updates are under index2.html and index3.html.
 	
 Reference: Smith et al.	 
+
+Updated 10/18/2022
+	This update cleans up some of the development files and simplifies the repo. The "index.html" file should have the latest 		verison of the tool.
