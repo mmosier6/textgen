@@ -38,7 +38,7 @@ function generateText(){
 	//var vrotText = convert2Text('vrot', vrot);
 	//var stpText = convert2Text('stp', stp);
 	//var risk = '';
-	console.log("Desk: " + desk);
+	//console.log("Desk: " + desk);
 	/*
 	var radarSite = '[RADAR_ID]';
 	var radarTilt = '[RADAR_TILT]';
@@ -434,6 +434,7 @@ function getWSDE(){
 	updateCanvas("4", ul, lr);
 	updateStormInfo(IBW, text['WSDE']);
 	createExceedanceBarChart('5', level);
+	createHistogram('6', level);
 }
 
 function getLevel(vrot, stp, popden){
@@ -765,9 +766,8 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 
 function getIBW(level){
 	console.log("getIBW");
-	console.log(level);
+
 	var vrotcon = jQuery("input[name=vrot-conts]:checked").val();
-	console.log(vrotcon);
 	var IBWInfo = new Object();
 
 	//Tag options
@@ -878,31 +878,46 @@ function getIBW(level){
 }
 
 function createEFBox(start,end){
+	console.log(start);
+	console.log(end);
 	var wspd = new Array(start, end);
 	var s;
 	var e;
-
+	console.log("scale width: " + jQuery("#ef-scale").width());
 	for(var i = 0; i < wspd.length; i++){
 		var v = wspd[i];
+		
 		if(v >= 200){
-			if(v == 200){p = 504;}
-			else if(v > 200){p = 604;}
-		}else if(v >= 170){
-			p = (2.9118 * v) - 78.353;
+			if(v == 200){p = 432;}
+			else if(v > 200){p = 520;}
+		/*
+		}else if(v >= 165){
+			//p = (2.9118 * v) - 78.353;
+			p = (2.5 * v) - 55;
 		}else if(v >= 135){
-			p = (3.3793 * v) - 154.59;
+			//p = (3.3793 * v) - 154.59;
+			p = (2.8276 * v) - 109.55;
 		}else if(v >= 86){
 			p = (4.04 * v) - 243.4;
 		}else{
 			var p = (3.92 * v) - 233.2;
 		}
-		if(i === 0){s = p;}
-		if(i === 1){e = p;}
+		*/
+		}else{
+			p = (3.2058 * v) - 187.71;
+		}
+		if(i === 0){
+			s = p;
+			console.log('box-start: ' + s);
+		}
+		if(i === 1){
+			e = p;
+			console.log('box-end: ' + e);
+		}
 	}
-	//var s = (start * 3.7576) - 216.72;
-	//var e = (end * 3.7576) - 216.72;
 	var w = e - s;
-	jQuery("#ef-box").css("top", "-5px");
+	console.log('width: ' + w);
+	jQuery("#ef-box").css("top", "-60px");
 	jQuery("#ef-box").css("left", s.toString()+"px");
 	jQuery("#ef-box").css("width", w.toString()+'px');
 	jQuery("#ef-box").show();
@@ -998,7 +1013,7 @@ function getExceedanceProbText(level){
 }
 
 function getExceedanceProbs(level){
-	console.log(level);
+
 	if(level === '5-1'){
 		return [100, 100, 100, 95, 91, 26];
 	}else if(level === '4-1'){
@@ -1105,7 +1120,25 @@ function getGR2Info(desk){
 		dataType: "json",
 		url: "/mosier/textgen/tools/getGR2Info.php?desk=" + desk
 	}).done(function(data){
-		console.log(data);
+
+		if("ERROR" in data){
+			_def.reject(data);
+		}else{
+			_def.resolve(data);
+		}
+	});
+
+	return _def.promise();
+
+}
+
+function getHistogramInfo(){
+	var _def = jQuery.Deferred();
+	jQuery.ajax({
+		dataType: "json",
+		url: "/mosier/textgen/tools/makeHistogramJSON.php"
+	}).done(function(data){
+
 		if("ERROR" in data){
 			_def.reject(data);
 		}else{
@@ -1257,7 +1290,7 @@ function createExceedanceBarChart(num, level){
 	var c = document.getElementById(id);
 	var ctx = c.getContext("2d");
 	var probs = getExceedanceProbs(level);
-	console.log(probs);
+	//console.log(probs);
 
 	var plotData = {
 		"EF1+": probs[1],
@@ -1274,11 +1307,62 @@ function createExceedanceBarChart(num, level){
 		gridColor: "#eeeee",
 		data: plotData,
 		dataLabels: true,
-		//colors: ["#a55ca5", "#67b6c7", "#bccd7a", "#eb9743", "#4c1036"]
-		colors: ["#d3d3d3", "#c0c0c0", "#a9a9a9", "#808080", "#000000"]
-		//colors: ["rgba(211, 211, 211, 0.6)", "rgba(192, 192, 192, 0.6)", "rgba(169, 169, 169, 0.6)", "rgba(128, 128, 128, 0.6)", "rgba(0, 0, 0, 0.6)"]
+		xAxisLabels: true,
+		colors: ["#d3d3d3", "#c0c0c0", "#a9a9a9", "#808080", "#000000"],
+		which: 'conditional-probabilities'
 	});
 
 	myBarchart.draw();
 
+}
+
+function createHistogram(num, level){
+	console.log("createHistogram");
+	getHistogramInfo().done(function(data){
+		//console.log(data[level]);
+		clearCanvas(num);
+		var id = 'canvas-'+num;
+		var c = document.getElementById(id);
+		var ctx = c.getContext("2d");
+		var pdata = data[level];
+		var keys = Object.keys(pdata);
+		var colors = new Array();
+		var bcolor = false;
+		if(level === '5-1'){
+			bcolor = 'rgba(255, 0, 255, 1.0)';
+		}else if(level === '4-1'){
+			bcolor = 'rgba(255, 0, 0, 1.0)';
+		}else if(level === '3-1' || level === '3-2' || level === '3-3' || level === '3-4'){
+			bcolor = 'rgba(255, 192, 0, 1.0)';
+		}else if(level === '2-1' || level === '2-2' || level === '2-3' || level === '2-4' || level === '2-5' || level === '2-6'){
+			bcolor = 'rgba(255, 255, 102, 1.0)';
+		}else{
+			bcolor = 'rgba(173, 235, 173, 1.0)';
+		}
+		var plotData = new Object();
+		for(var i = 0; i < keys.length; i++){
+			if(keys[i] === ""){continue;}
+			if(keys[i] === "TOTAL" || keys[i] === "60-109" || keys[i] === "110-139" || keys[i] === "140+"){continue;}
+			//console.log(keys[i] + " => " + pdata[keys[i]]);
+			plotData[keys[i]] = pdata[keys[i]];
+			colors[i] = bcolor;
+		}
+		
+		var myBarchart = new Barchart({
+			canvas: c,
+			padding: 25,
+			gridScale: 25,
+			gridColor: "#eeeee",
+			data: plotData,
+			dataLabels: false,
+			xAxisLabels: true,
+			barBorders: "#000",
+			colors: colors,
+			which: 'tornado-damage-histogram'
+		});
+		
+		myBarchart.draw();
+		
+
+	});
 }

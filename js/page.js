@@ -1,10 +1,10 @@
 function buildPage(page){
 	jQuery("#desk").buttonset();
-	jQuery("#vrot").buttonset();
-	jQuery("#vrot-cont").buttonset();
-	jQuery("#stp").buttonset();
-	jQuery("#popden").buttonset();
-	jQuery("#tds").buttonset();
+	//jQuery("#vrot").buttonset();
+	//jQuery("#vrot-cont").buttonset();
+	//jQuery("#stp").buttonset();
+	//jQuery("#popden").buttonset();
+	//jQuery("#tds").buttonset();
 	jQuery("#spotter").buttonset();
 
 	jQuery("#follow-up").buttonset();
@@ -18,6 +18,13 @@ function buildPage(page){
 		console.log("radio button change");
 		generateText();
 	});
+
+	jQuery('input[type=checkbox][name=cb-1]').buttonset();
+
+	jQuery("#prev").button();
+	jQuery("#next").button();
+	jQuery("#clear").button();
+
 
 	//Lower minus/plus clicks
 	jQuery("#wsde-lower-minus .ui-icon-circle-minus").on('click', function(){
@@ -40,8 +47,6 @@ function buildPage(page){
 	var c = document.getElementById("canvas-3");
 	var ctx = c.getContext("2d");
 	var img = new Image();
-	console.log('width:' + c.width)
-	console.log('height:' + c.height)
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, c.width, c.height);
 	};
@@ -50,12 +55,11 @@ function buildPage(page){
 	var c2 = document.getElementById("canvas-4");
 	var ctx2 = c2.getContext("2d");
 	var img2 = new Image();
-	console.log('width:' + c2.width)
-	console.log('height:' + c2.height)
 	img2.onload = function(){
 		ctx2.drawImage(img2, 0, 0, img2.width, img2.height, 0, 0, c2.width, c2.height);
 	};
 	img2.src = "./src/2D_IBW_c15plusmin.png";
+
 
 	//jQuery("#textarea-3").text("");
 	//jQuery("#textarea-4").text("");
