@@ -183,10 +183,10 @@ function getWSDE(){
 	var lr = new Array();
 
 	var level = getLevel(vrot, stp, popden, tds);
-	console.log("level (v1): " + level);
+	//console.log("level (v1): " + level);
 
 	var level= getLevel2(vrot, stp, popden);
-	console.log("level (v2): " + level);
+	//console.log("level (v2): " + level);
 
 	var wsde = new Array();
 
@@ -765,7 +765,7 @@ function getText(level, vrot, vrotcon, stp, popden, tds){
 }
 
 function getIBW(level){
-	console.log("getIBW");
+	//console.log("getIBW");
 
 	var vrotcon = jQuery("input[name=vrot-conts]:checked").val();
 	var IBWInfo = new Object();
@@ -869,7 +869,6 @@ function getIBW(level){
 
 	info[level].forEach(function(d,n){
 		var k = IBWKeys[n];
-		console.log(k + " => " + IBWInfo[k][d]);
 		IBW[k] = IBWInfo[k][d];
 	});
 
@@ -878,12 +877,9 @@ function getIBW(level){
 }
 
 function createEFBox(start,end){
-	console.log(start);
-	console.log(end);
 	var wspd = new Array(start, end);
 	var s;
 	var e;
-	console.log("scale width: " + jQuery("#ef-scale").width());
 	for(var i = 0; i < wspd.length; i++){
 		var v = wspd[i];
 		
@@ -908,15 +904,12 @@ function createEFBox(start,end){
 		}
 		if(i === 0){
 			s = p;
-			console.log('box-start: ' + s);
 		}
 		if(i === 1){
 			e = p;
-			console.log('box-end: ' + e);
 		}
 	}
 	var w = e - s;
-	console.log('width: ' + w);
 	jQuery("#ef-box").css("top", "-60px");
 	jQuery("#ef-box").css("left", s.toString()+"px");
 	jQuery("#ef-box").css("width", w.toString()+'px');
@@ -1134,6 +1127,19 @@ function getGR2Info(desk){
 
 function getHistogramInfo(){
 	var _def = jQuery.Deferred();
+
+	_def.resolve(tor_histogram_info);
+
+	/*
+	fetch("/mosier/textgen/tools/tor_histogram_info.json")
+		.then((response) => response.json())
+		.then((data) => {
+			_def.resolve(data);
+		}).catch(error => {
+			_def.reject(error);
+		});
+	*/
+	/*
 	jQuery.ajax({
 		dataType: "json",
 		url: "/mosier/textgen/tools/makeHistogramJSON.php"
@@ -1145,7 +1151,7 @@ function getHistogramInfo(){
 			_def.resolve(data);
 		}
 	});
-
+	*/
 	return _def.promise();
 
 }
@@ -1213,7 +1219,7 @@ function adjustWSDE(which, way){
 }
 
 function updateCanvas(num, ul, lr){
-	console.log("updateCanvas");
+	//console.log("updateCanvas");
 	var id = 'canvas-'+num;
 	var vrotcon = jQuery("input[name=vrot-conts]:checked").val();
 	var c = document.getElementById(id);
@@ -1256,7 +1262,7 @@ function clearCanvas(num){
 }
 
 function updateStormInfo(IBW, WSDE){
-	console.log('updateStormInfo');
+	//console.log('updateStormInfo');
 
 	var red1 = "rgba(255, 153, 153, 1)";
 	var red2 = "rgba(255, 0, 0, 1)";
@@ -1284,7 +1290,7 @@ function updateStormInfo(IBW, WSDE){
 }
 
 function createExceedanceBarChart(num, level){
-	console.log("createExceedanceBarChart");
+	//console.log("createExceedanceBarChart");
 	clearCanvas(num);
 	var id = 'canvas-'+num;
 	var c = document.getElementById(id);
@@ -1317,7 +1323,7 @@ function createExceedanceBarChart(num, level){
 }
 
 function createHistogram(num, level){
-	console.log("createHistogram");
+	//console.log("createHistogram");
 	getHistogramInfo().done(function(data){
 		//console.log(data[level]);
 		clearCanvas(num);

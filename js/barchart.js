@@ -53,7 +53,6 @@ var Barchart = function(options){
 
 	//Color background on 'tornado-damage-histogram'
 	if(this.options.which === 'tornado-damage-histogram'){
-		console.log(this.options.data);
        		var barIndex = 0;
        		var numberOfBars = Object.keys(this.options.data).length;
         	var barSize = (canvasActualWidth)/numberOfBars;
@@ -71,24 +70,19 @@ var Barchart = function(options){
 			var tmp = categ.split("-");
 			//Get total counts for ranges
 			tc = tc + parseInt(val);
-			console.log(categ + " => " + val + "(" + tc + ")");
 			total = total + parseInt(val);
 			//Get x values
 			for(const xv of xAxisValues){
 				var coord_tmp = new Array();
 				if((tmp[0] <= xv) && (tmp[1] >= xv)){
 					coords.push(xx);
-					console.log(tc - parseInt(val));
 					segTotal.push(tc - parseInt(val));
 					tc = parseInt(val);
-					console.log(tc);
 					break;	
 				}else if((xv == '201') && (tmp[0] == '201+')){
 					coords.push(xx);
-					console.log(tc - parseInt(val));
 					segTotal.push(tc - parseInt(val));
 					tc = parseInt(val);
-					console.log(tc);
 					break;	
 				}
 			}
@@ -100,8 +94,6 @@ var Barchart = function(options){
 			if(i == 3){
 				segTotal[i] = segTotal[i] + segTotal[4];
 			}
-			console.log(segTotal[i] + "/" + total);
-			console.log(segTotal[i] / total);
 			percents.push(segTotal[i] / total);
 			if(i == 3){break;}
 		}
@@ -215,9 +207,7 @@ var Barchart = function(options){
 		var barHeight = Math.round( canvasActualHeight * val/maxValue) ;
 		if(val === -9999){barHeight = 0};
 		//drawBar(ctx, upperLeftCornerX, upperLeftCornerY, width, height, color);
-		if(this.options.barBorders){
-			console.log("here: " + this.options.barBorders);
-			
+		if(this.options.barBorders){			
 			drawBar(
 				this.ctx,
 				(this.options.padding + barIndex * barSize) - 2 ,
